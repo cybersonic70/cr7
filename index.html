@@ -4,576 +4,473 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CR7 - Cristiano Ronaldo</title>
+<title>CR7 - The Legend</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background:#050510;
-    color:white;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
+body {
+  font-family: Arial, sans-serif;
+  color: white;
+  background: #080706;
+  overflow: hidden;
+  min-height: 100vh;
 }
 
-body::before{
-    content:"";
-    position:fixed;
-    width:600px;
-    height:600px;
-    border-radius:50%;
-    background:radial-gradient(circle,#00eaff33,transparent 65%);
-    top:-200px;
-    left:-200px;
-    animation:glow 5s infinite alternate;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse at 50% 100%, #57320d 0%, transparent 48%),
+    radial-gradient(ellipse at 15% 0%, #5b1111 0%, transparent 35%),
+    radial-gradient(ellipse at 85% 0%, #80601d 0%, transparent 35%),
+    linear-gradient(145deg, #100d09, #050505 70%);
 }
 
-body::after{
-    content:"";
-    position:fixed;
-    width:600px;
-    height:600px;
-    border-radius:50%;
-    background:radial-gradient(circle,#ff00e633,transparent 65%);
-    bottom:-250px;
-    right:-200px;
-    animation:glow 6s infinite alternate;
+.stadium {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 48px,
+      rgba(255,255,255,.025) 50px
+    );
+  perspective: 600px;
 }
 
-@keyframes glow{
-    from{transform:scale(1)}
-    to{transform:scale(1.3)}
+.stadium::before {
+  content: "";
+  position: absolute;
+  width: 130%;
+  height: 35%;
+  left: -15%;
+  bottom: -15%;
+  border: 2px solid rgba(218,169,69,.18);
+  border-radius: 50%;
+  transform: rotateX(65deg);
+  box-shadow: 0 0 50px rgba(218,169,69,.12);
 }
 
-.page{
-    position:absolute;
-    width:100%;
-    height:100vh;
-    padding:60px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-
-    opacity:0;
-    transform:translateX(100%) rotateY(-35deg) scale(.8);
-    transition:1s;
-    pointer-events:none;
+.light {
+  position: fixed;
+  top: -100px;
+  width: 240px;
+  height: 500px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,220,.18),
+    transparent
+  );
+  filter: blur(35px);
+  transform: rotate(25deg);
+  pointer-events: none;
 }
 
-.page.active{
-    opacity:1;
-    transform:translateX(0) rotateY(0) scale(1);
-    pointer-events:auto;
+.light.one { left: 8%; }
+.light.two { right: 8%; transform: rotate(-25deg); }
+
+header {
+  position: absolute;
+  top: 22px;
+  left: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
 }
 
-h1{
-    font-size:80px;
-    letter-spacing:8px;
-    text-shadow:
-    0 0 10px #00eaff,
-    0 0 30px #00eaff,
-    0 0 60px #00eaff;
+.logo {
+  color: #e8bd61;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 3px;
 }
 
-h2{
-    font-size:45px;
-    margin-bottom:25px;
-    color:#00eaff;
-    text-shadow:0 0 20px #00eaff;
+.logo span {
+  color: #c52a25;
 }
 
-p{
-    max-width:900px;
-    font-size:20px;
-    line-height:1.8;
+.counter {
+  color: #d9bd7d;
+  font-size: 13px;
+  letter-spacing: 2px;
 }
 
-.neon{
-    color:#ff00e6;
-    text-shadow:0 0 15px #ff00e6;
+.slides {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  perspective: 1200px;
 }
 
-.card{
-    width:850px;
-    max-width:90%;
-    padding:35px;
-    border:2px solid #00eaff;
-    border-radius:25px;
-    background:#08101dcc;
-    box-shadow:
-    0 0 20px #00eaff,
-    inset 0 0 30px #00eaff22;
-    transform:perspective(900px) rotateX(5deg);
-    transition:.5s;
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 90px 25px 75px;
+  opacity: 0;
+  transform: rotateY(15deg) translateX(70px) scale(.92);
+  transition: .8s ease;
+  pointer-events: none;
 }
 
-.card:hover{
-    transform:perspective(900px) rotateX(0deg)
-               rotateY(5deg) scale(1.03);
-
-    box-shadow:
-    0 0 40px #00eaff,
-    0 0 80px #ff00e6;
+.slide.active {
+  opacity: 1;
+  transform: rotateY(0) translateX(0) scale(1);
+  pointer-events: auto;
 }
 
-.stats{
-    display:flex;
-    gap:25px;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin-top:25px;
+.tag {
+  color: #d9ad51;
+  font-size: 12px;
+  letter-spacing: 5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
-.stat{
-    min-width:170px;
-    padding:20px;
-    border:1px solid #ff00e6;
-    border-radius:15px;
-    box-shadow:0 0 20px #ff00e655;
+h1 {
+  font-size: clamp(42px, 9vw, 95px);
+  font-weight: 1000;
+  letter-spacing: 3px;
+  line-height: 1.05;
+  color: #f5d58d;
+  text-shadow: 0 5px 25px rgba(218,169,69,.25);
 }
 
-.stat b{
-    display:block;
-    font-size:35px;
-    color:#ff00e6;
+h1 .red {
+  color: #c62b25;
 }
 
-.clubs{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:18px;
-    max-width:1000px;
+h2 {
+  font-size: clamp(30px, 5vw, 55px);
+  color: #f2d28d;
+  margin-bottom: 25px;
 }
 
-.club{
-    padding:18px 25px;
-    border:1px solid #00eaff;
-    border-radius:15px;
-    background:#07131d;
-    box-shadow:0 0 15px #00eaff55;
-    transition:.4s;
+p {
+  color: #ddd5c7;
+  font-size: clamp(15px, 2vw, 19px);
+  line-height: 1.8;
+  max-width: 760px;
 }
 
-.club:hover{
-    transform:translateY(-10px) rotateY(15deg);
-    box-shadow:0 0 30px #00eaff;
+.line {
+  width: 90px;
+  height: 4px;
+  margin: 25px auto;
+  background: linear-gradient(90deg, #9d1717, #e9c36d);
+  border-radius: 5px;
 }
 
-.trophies{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    max-width:900px;
+.card {
+  width: min(780px, 92vw);
+  padding: 35px;
+  background: rgba(25,20,13,.78);
+  border: 1px solid rgba(222,180,94,.45);
+  border-radius: 18px;
+  box-shadow: 0 20px 70px rgba(0,0,0,.5),
+              inset 0 0 25px rgba(218,169,69,.05);
+  transform: translateZ(30px);
 }
 
-.trophy{
-    padding:25px;
-    border:1px solid #ffd700;
-    border-radius:18px;
-    background:#171306;
-    box-shadow:0 0 20px #ffd70055;
-    transition:.4s;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 15px;
+  width: min(850px, 95vw);
 }
 
-.trophy:hover{
-    transform:translateZ(40px) rotateY(10deg);
-    box-shadow:0 0 35px #ffd700;
+.item {
+  padding: 22px 12px;
+  border: 1px solid rgba(218,169,69,.4);
+  border-radius: 13px;
+  background: rgba(30,24,16,.8);
+  transition: .3s;
 }
 
-.trophy span{
-    font-size:40px;
+.item:hover {
+  transform: translateY(-7px) rotateX(5deg);
+  border-color: #e9c36d;
+  box-shadow: 0 10px 30px rgba(218,169,69,.15);
 }
 
-.hint{
-    position:fixed;
-    bottom:25px;
-    width:100%;
-    text-align:center;
-    color:#aaa;
-    z-index:10;
+.item h3 {
+  color: #e8bd61;
+  font-size: 19px;
+  margin-bottom: 10px;
 }
 
-.key{
-    color:#00eaff;
-    border:1px solid #00eaff;
-    padding:8px 15px;
-    border-radius:8px;
-    box-shadow:0 0 15px #00eaff;
+.item p {
+  font-size: 14px;
 }
 
-.cr7{
-    font-size:180px;
-    font-weight:bold;
-    color:white;
-
-    transform:perspective(500px) rotateX(15deg);
-
-    text-shadow:
-    0 0 10px #00eaff,
-    0 0 30px #00eaff,
-    0 0 70px #ff00e6;
-
-    animation:float 3s infinite ease-in-out;
+.number {
+  font-size: 38px;
+  font-weight: 900;
+  color: #e8bd61;
+  margin-bottom: 8px;
 }
 
-@keyframes float{
-    0%,100%{
-        transform:perspective(500px)
-                   rotateX(15deg)
-                   translateY(0);
-    }
-
-    50%{
-        transform:perspective(500px)
-                   rotateX(15deg)
-                   translateY(-20px);
-    }
+.ball {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  margin: 25px auto;
+  background:
+    radial-gradient(circle at 35% 30%, #fff, #c9c2b3 60%, #777 100%);
+  box-shadow: 0 0 45px rgba(230,190,100,.35);
+  position: relative;
+  animation: float 3s ease-in-out infinite;
 }
 
-.small{
-    color:#aaa;
-    margin-top:15px;
+.ball::before {
+  content: "⚽";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 83px;
 }
 
-.credit{
-    margin-top:25px;
-    color:#00eaff;
-    font-size:18px;
-    text-shadow:0 0 15px #00eaff;
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-14px) rotate(8deg); }
 }
 
-.siuuu{
-    font-size:70px;
-    color:#ff00e6;
-    text-shadow:
-    0 0 10px #ff00e6,
-    0 0 30px #ff00e6,
-    0 0 60px #00eaff;
-
-    animation:siuuu 1s infinite alternate;
+.hint {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #cbb98f;
+  font-size: 12px;
+  letter-spacing: 2px;
 }
 
-@keyframes siuuu{
-    from{transform:scale(1)}
-    to{transform:scale(1.08)}
+.hint span {
+  color: #e8bd61;
+  border: 1px solid #a77d32;
+  border-radius: 5px;
+  padding: 6px 12px;
+  margin-left: 8px;
+}
+
+.progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: #d8ad56;
+  width: 0%;
+  transition: .4s;
+}
+
+.final-title {
+  font-size: clamp(55px, 12vw, 130px);
+  color: #eac56e;
+  text-shadow: 0 0 40px rgba(230,180,70,.5);
+}
+
+.credit {
+  margin-top: 25px;
+  font-size: 13px;
+  color: #c9b58c;
+  letter-spacing: 2px;
+}
+
+@media(max-width:600px) {
+  .card { padding: 24px 18px; }
+  header { left: 15px; right: 15px; }
+  .logo { font-size: 17px; }
+  .slide { padding-left: 15px; padding-right: 15px; }
 }
 </style>
 </head>
 
 <body>
+<div class="stadium"></div>
+<div class="light one"></div>
+<div class="light two"></div>
 
-<!-- PAGE 1 -->
-<section class="page active">
-    <div class="cr7">CR7</div>
+<header>
+  <div class="logo">CR<span>7</span> LEGEND</div>
+  <div class="counter" id="counter">01 / 08</div>
+</header>
 
-    <h1>CRISTIANO RONALDO</h1>
+<main class="slides">
 
-    <p class="neon">
-        THE LEGEND • THE MACHINE • THE GOAT
-    </p>
-
-    <p class="small">
-        Une légende du football portugais
-    </p>
+<section class="slide active">
+  <div class="tag">The story of a legend</div>
+  <h1>CRISTIANO<br><span class="red">RONALDO</span></h1>
+  <div class="ball"></div>
+  <div class="line"></div>
+  <p>Une légende du football mondial</p>
+  <div class="credit">UN PROJET SUR LE FOOTBALL</div>
 </section>
 
-<!-- PAGE 2 -->
-<section class="page">
-
-    <h2>🇵🇹 Cristiano Ronaldo</h2>
-
-    <div class="card">
-
-        <p>
-        Cristiano Ronaldo dos Santos Aveiro est un footballeur portugais,
-        considéré comme l'un des plus grands joueurs de l'histoire du football.
-        Il est connu pour sa vitesse, sa puissance, ses frappes, son jeu aérien
-        et son incroyable capacité à marquer.
-        </p>
-
-        <div class="stats">
-
-            <div class="stat">
-                <b>CR7</b>
-                Surnom
-            </div>
-
-            <div class="stat">
-                <b>Portugal</b>
-                Nationalité
-            </div>
-
-            <div class="stat">
-                <b>7</b>
-                Numéro célèbre
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<!-- PAGE 3 -->
-<section class="page">
-
-    <h2>⚽ Les clubs de Ronaldo</h2>
-
-    <div class="clubs">
-
-        <div class="club">🇵🇹 Sporting CP</div>
-
-        <div class="club">🏴 Manchester United</div>
-
-        <div class="club">🇪🇸 Real Madrid</div>
-
-        <div class="club">🇮🇹 Juventus</div>
-
-        <div class="club">🏴 Manchester United</div>
-
-        <div class="club">🇸🇦 Al-Nassr</div>
-
-    </div>
-
-    <p class="small">
-        Une carrière passée par plusieurs grands championnats.
-    </p>
-
-</section>
-
-<!-- PAGE 4 -->
-<section class="page">
-
-    <h2>👑 Real Madrid</h2>
-
-    <div class="card">
-
-        <p>
-        Son passage au Real Madrid est l'une des périodes les plus
-        impressionnantes de sa carrière. Il devient une figure majeure
-        du club et établit de nombreux records.
-        </p>
-
-        <div class="stats">
-
-            <div class="stat">
-                <b>450+</b>
-                Buts avec le Real
-            </div>
-
-            <div class="stat">
-                <b>4</b>
-                Ligues des Champions
-            </div>
-
-            <div class="stat">
-                <b>4</b>
-                Ballons d'Or avec le Real
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- PAGE 5 -->
-<section class="page">
-
-    <h2>🏆 Les grands trophées</h2>
-
-    <div class="trophies">
-
-        <div class="trophy">
-            <span>🏆</span>
-            <h3>Champions League</h3>
-        </div>
-
-        <div class="trophy">
-            <span>🥇</span>
-            <h3>Ballon d'Or</h3>
-        </div>
-
-        <div class="trophy">
-            <span>🇪🇺</span>
-            <h3>Euro 2016</h3>
-        </div>
-
-        <div class="trophy">
-            <span>🏆</span>
-            <h3>Nations League</h3>
-        </div>
-
-        <div class="trophy">
-            <span>👑</span>
-            <h3>Ligues nationales</h3>
-        </div>
-
-        <div class="trophy">
-            <span>⭐</span>
-            <h3>Récompenses individuelles</h3>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- PAGE 6 -->
-<section class="page">
-
-    <h2>🥇 Ballon d'Or</h2>
-
-    <div class="card">
-
-        <p>
-        Cristiano Ronaldo a remporté le Ballon d'Or à plusieurs reprises
-        et fait partie des joueurs les plus récompensés de l'histoire
-        du football.
-        </p>
-
-        <div class="stats">
-
-            <div class="stat">
-                <b>5</b>
-                Ballons d'Or
-            </div>
-
-            <div class="stat">
-                <b>4</b>
-                Soulier d'Or européen
-            </div>
-
-            <div class="stat">
-                <b>∞</b>
-                Records
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- PAGE 7 -->
-<section class="page">
-
-    <h2>🇵🇹 Ronaldo avec le Portugal</h2>
-
-    <div class="card">
-
-        <p>
-        Avec la sélection portugaise, Ronaldo a remporté l'Euro 2016
-        et la Ligue des Nations 2019. Il est devenu une figure historique
-        de la sélection nationale.
-        </p>
-
-        <div class="stats">
-
-            <div class="stat">
-                <b>2016</b>
-                Euro
-            </div>
-
-            <div class="stat">
-                <b>2019</b>
-                Nations League
-            </div>
-
-            <div class="stat">
-                <b>🇵🇹</b>
-                Portugal
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- PAGE 8 -->
-<section class="page">
-
-    <h2>🔥 Pourquoi CR7 est spécial ?</h2>
-
-    <div class="card">
-
-        <p>
-        Discipline, travail, mentalité, vitesse, puissance, technique
-        et une énorme envie de gagner : ce sont quelques-unes des qualités
-        qui ont marqué la carrière de Cristiano Ronaldo.
-        </p>
-
-        <br>
-
-        <p class="neon">
-            THE WORK NEVER STOPS.
-        </p>
-
-    </div>
-
-</section>
-
-<!-- PAGE 9 FINAL -->
-<section class="page">
-
-    <div class="cr7">7</div>
-
-    <div class="siuuu">
-        SIUUUUUU! ⚡
-    </div>
-
+<section class="slide">
+  <div class="tag">Chapitre 01</div>
+  <h2>Qui est CR7 ?</h2>
+  <div class="card">
     <p>
-        Cristiano Ronaldo — une carrière, une histoire, une légende.
+      Cristiano Ronaldo dos Santos Aveiro est un célèbre
+      footballeur portugais, né le 5 février 1985 à Funchal,
+      sur l'île de Madère, au Portugal.
+      <br><br>
+      Il est reconnu pour sa vitesse, sa technique,
+      sa puissance et son incroyable détermination.
     </p>
-
-    <div class="credit">
-        Par Mohamed Amine Elghallal et Ayoub Touchant
-    </div>
-
+  </div>
 </section>
 
-<div class="hint">
-    Appuie sur
-    <span class="key">ESPACE</span>
-    pour continuer
-</div>
+<section class="slide">
+  <div class="tag">Chapitre 02</div>
+  <h2>Ses clubs</h2>
+  <div class="grid">
+    <div class="item"><h3>Sporting CP</h3><p>Ses débuts professionnels</p></div>
+    <div class="item"><h3>Manchester United</h3><p>Premiers grands succès</p></div>
+    <div class="item"><h3>Real Madrid</h3><p>Une période historique</p></div>
+    <div class="item"><h3>Juventus</h3><p>Une nouvelle aventure</p></div>
+    <div class="item"><h3>Al-Nassr</h3><p>Une nouvelle étape en Arabie saoudite</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="tag">Chapitre 03</div>
+  <h2>La légende du Real Madrid</h2>
+  <div class="card">
+    <div class="number">2009 — 2018</div>
+    <p>
+      Ronaldo a marqué l'histoire du Real Madrid.
+      Il a remporté quatre Ligues des champions avec le club
+      et est devenu son meilleur buteur historique.
+      <br><br>
+      Ses performances ont fait de lui une légende du stade Santiago Bernabéu.
+    </p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="tag">Chapitre 04</div>
+  <h2>Son palmarès</h2>
+  <div class="grid">
+    <div class="item"><div class="number">5</div><h3>Ballons d'Or</h3></div>
+    <div class="item"><div class="number">5</div><h3>Ligue des champions</h3></div>
+    <div class="item"><div class="number">2016</div><h3>Euro avec le Portugal</h3></div>
+    <div class="item"><div class="number">2019</div><h3>Ligue des nations</h3></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="tag">Chapitre 05</div>
+  <h2>Le Portugal</h2>
+  <div class="card">
+    <p>
+      Cristiano Ronaldo est l'un des grands symboles
+      de la sélection portugaise.
+      <br><br>
+      Il a remporté l'Euro 2016 et la Ligue des nations 2019
+      avec son équipe nationale.
+      <br><br>
+      Il est devenu un joueur emblématique de son pays.
+    </p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="tag">Chapitre 06</div>
+  <h2>Une mentalité de champion</h2>
+  <div class="grid">
+    <div class="item"><h3>Discipline</h3><p>Un travail quotidien</p></div>
+    <div class="item"><h3>Détermination</h3><p>Ne jamais abandonner</p></div>
+    <div class="item"><h3>Ambition</h3><p>Toujours viser plus haut</p></div>
+    <div class="item"><h3>Passion</h3><p>Aimer le football</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="tag">Merci pour votre attention</div>
+  <div class="final-title">SIUUUU!</div>
+  <div class="ball"></div>
+  <h2>CR7 — THE LEGEND</h2>
+  <p>Une carrière, une passion, une légende.</p>
+  <div class="credit">
+    PAR MOHAMED AMINE ELGHALLAL<br>
+    ET AYOUB TOUCHANT
+  </div>
+</section>
+
+</main>
+
+<div class="hint">APPUYEZ SUR <span>ESPACE</span> POUR CONTINUER</div>
+<div class="progress" id="progress"></div>
+
+<audio id="cr7sound" preload="auto">
+  <source src="siuuu_cr7.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-
-const pages = document.querySelectorAll(".page");
+const slides = document.querySelectorAll(".slide");
+const counter = document.getElementById("counter");
+const progress = document.getElementById("progress");
+const sound = document.getElementById("cr7sound");
 
 let current = 0;
+let soundPlayed = false;
 
-function nextPage(){
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle("active", i === index);
+  });
 
-    pages[current].classList.remove("active");
+  current = index;
+  counter.textContent =
+    String(current + 1).padStart(2, "0") +
+    " / " +
+    String(slides.length).padStart(2, "0");
 
-    current++;
+  progress.style.width =
+    ((current + 1) / slides.length * 100) + "%";
 
-    if(current >= pages.length){
-        current = 0;
-    }
-
-    pages[current].classList.add("active");
+  if (current === slides.length - 1 && !soundPlayed) {
+    soundPlayed = true;
+    sound.currentTime = 0;
+    sound.play().catch(() => {
+      console.log("Cliquez sur la page pour autoriser le son.");
+    });
+  }
 }
 
-document.addEventListener("keydown", function(e){
+document.addEventListener("keydown", function(event) {
+  if (event.code === "Space") {
+    event.preventDefault();
 
-    if(e.code === "Space"){
-        e.preventDefault();
-        nextPage();
+    if (current < slides.length - 1) {
+      showSlide(current + 1);
     }
+  }
 
+  if (event.code === "ArrowLeft" && current > 0) {
+    showSlide(current - 1);
+  }
 });
-
 </script>
 
 </body>
 </html>
-```
